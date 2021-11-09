@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Cookies!</title>
+</head>
+
+<script>
+
+var username = "";
+
+    function newCookie(name, value, expiry_time)
+    {
+        //Set cookie time to 'expiry_time' number of days from now
+        const d = new Date();
+        d.setTime(d.getTime() + (expiry_time*24*60*60*1000));
+
+        let expires = "expires="+ d.toUTCString();
+
+        document.cookie = cname + "=" + cvalue + ";" + expires + ";";
+    }
+
+    function getCookie(cname)
+    {
+        let name = cname + "=";
+        let decodedCookie = decodeURIComponent(document.cookie);
+
+        //Split into pieces, each piece is seperated from the others by ';' in the original cookie.
+        let carr = decodedCookie.split(';');
+
+        //Loop through each piece of the split string.
+        for(let i = 0; i <carr.length; i++) {
+
+            let c = carr[i];
+
+            //Move forward until the beginning character is not a space
+            while (c.charAt(0) == ' ') {
+                c = c.substring(1);
+            }
+
+            //If value of 'name' can't be found in 'c'
+            if (c.indexOf(name) == 0) {
+                return c.substring(name.length, c.length);
+            }
+
+        }
+
+        return "";
+    }
+
+    function checkForCookie()
+    {
+        username = getCookie("username");
+
+        if (username == "") {
+
+            username = prompt("Please enter your username:", "");
+
+            if (username != "" && username != null)
+            {
+                newCookie("username", username, 365);
+            }
+
+        }
+
+    }
+
+
+</script>
+
+<body onload = "checkForCookie()">
+
+    <h1>COOKIES TEST</h1>
+    <h2>Anuraag Godavari</h2>
+
+    <p>This is a page for testing some cookies.</p>
+
+    <p id="print_cookie"></p>
+
+    <script>
+        if (username != "")
+            document.getElementById("print_cookie").innerHTML = "Here's your cookie!<br><i>&nbsp;&nbsp;&nbsp;&nbsp;" + decodeURIComponent(document.cookie) + "<\i>";
+
+        else
+            document.getElementById("print_cookie").innerHTML = "Reload to see your username.";
+    </script>
+
+</body>
+</html>
