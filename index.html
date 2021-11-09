@@ -7,8 +7,6 @@
 
 <script>
 
-var username = "";
-
     function newCookie(name, value, expiry_time)
     {
         //Set cookie time to 'expiry_time' number of days from now
@@ -17,7 +15,7 @@ var username = "";
 
         let expires = "expires="+ d.toUTCString();
 
-        document.cookie = cname + "=" + cvalue + ";" + expires + ";";
+        document.cookie = name + "=" + value + ";" + expires + ";";
     }
 
     function getCookie(cname)
@@ -50,15 +48,15 @@ var username = "";
 
     function checkForCookie()
     {
-        username = getCookie("username");
+        let user = getCookie("username");
 
-        if (username == "") {
+        if (user == "") {
 
-            username = prompt("Please enter your username:", "");
+            user = prompt("Please enter your username:", "");
 
-            if (username != "" && username != null)
+            if (user != "" && user != null)
             {
-                newCookie("username", username, 365);
+                newCookie("username", user, 365);
             }
 
         }
@@ -78,11 +76,16 @@ var username = "";
     <p id="print_cookie"></p>
 
     <script>
-        if (username != "")
+        let user = getCookie("username")
+        if (user != "")
+        {
             document.getElementById("print_cookie").innerHTML = "Here's your cookie!<br><i>&nbsp;&nbsp;&nbsp;&nbsp;" + decodeURIComponent(document.cookie) + "<\i>";
+        }
 
         else
+        {
             document.getElementById("print_cookie").innerHTML = "Reload to see your username.";
+        }
     </script>
 
 </body>
